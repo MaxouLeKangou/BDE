@@ -17,6 +17,9 @@ export default {
             "2xl": "1.25rem",
             "3xl": "1.625rem",
         },
+        dropShadow: {
+            'button': '10px 0px 20px 0px #FFFFFF',
+        },
         extend: {
             colors: {
                 primary: {
