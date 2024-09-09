@@ -1,3 +1,10 @@
+@import url(../font/fonts.css);
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+	@apply bg-background-100 font-poppins text-white-100 text-base
+	min-h-screen mx-6
+}

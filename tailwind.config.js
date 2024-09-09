@@ -9,6 +9,14 @@ export default {
         "./error.vue",
     ],
     theme: {
+        fontSize: {
+            "sm": ".625rem",
+            "base": ".75rem",
+            "lg": ".875rem",
+            "xl": "1rem",
+            "2xl": "1.25rem",
+            "3xl": "1.625rem",
+        },
         extend: {
             colors: {
                 primary: {
@@ -30,6 +38,13 @@ export default {
                     100: "#030712",
                     200: "#141623"
                 }
+            },
+            fontFamily: {
+                poppins_light: ["Poppins-Light", "sans-serif"],
+                poppins: ["Poppins-Regular", "sans-serif"],
+                poppins_semibold: ["Poppins-SemiBold", "sans-serif"],
+                poppins_extrabold: ["Poppins-ExtraBold", "sans-serif"],
+
             },
         },
     },
