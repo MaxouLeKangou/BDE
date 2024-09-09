@@ -10,4 +10,10 @@ export default defineNuxtConfig({
             autoprefixer: {},
         },
     },
+
+    runtimeConfig: {
+        public: {
+            DATABASE_URL: process.env.DATABASE_URL,
+        },
+    },
 });
