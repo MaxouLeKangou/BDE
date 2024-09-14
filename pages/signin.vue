@@ -1,7 +1,7 @@
 <template>
 	<main class="h-screen pb-10 flex flex-col">
 		<header class="flex justify-center py-14">
-			<img class="w-24 h-24" src="../assets/img/test.png" alt="">
+			<Logo class="h-24 w-24"/>
 		</header>
 
 		<div class="flex flex-grow flex-col justify-between">
@@ -16,6 +16,7 @@
 						<div>
 							<label for="email" class="sr-only">Votre adresse mail</label>
 							<input
+								oninput="this.value = this.value.toLowerCase()"
 								id="email"
 								type="email"
 								required aria-required="true"
@@ -23,20 +24,22 @@
 								v-model="account.email"
 								class="focus:outline-none focus:border-white/75">
 						</div>
-						<div>
+						<div class="relative">
 							<label for="password" class="sr-only">Votre mot de passe</label>
 							<input
 								id="password"
-								type="password"
+								:type="isPasswordVisible ? 'text' : 'password'"
 								required aria-required="true"
 								placeholder="Mot de passe"
-								v-model="account.password">
+								v-model="account.password"
+								class="input-password">
+							<inputEye @click="isPasswordVisible = !isPasswordVisible" :isVisible="isPasswordVisible"/>
 						</div>
 					</fieldset>
 					<p class="text-white-200 text-right">
 						<nuxt-link to="/">mot de passe oublié ?</nuxt-link>
 					</p>
-					<p v-if="error" class="text-red-500">{{ error }}</p>
+					<p v-if="error" class="text-red-500 mt-3">{{ error }}</p>
 					<button type="submit" class="generic-button w-full mt-10">CONNEXION</button>
 				</form>
 
@@ -57,10 +60,16 @@ const error = ref(null as any)
 const signIn = async () => {
 	const request = await useSignIn(account.value)
 	if(request) {
-		error.value = 'Informations incorrect'
+		if (JSON.stringify(request).includes('Please verify your account first')) {
+			error.value = 'Votre compte est en cours de vérification !'
+		} else {
+			error.value = 'Informations incorrect'
+		}
 		account.value.password = ''
 	}
 }
+
+const isPasswordVisible = ref(false)
 
 definePageMeta({
 	middleware: 'auth',

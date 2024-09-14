@@ -11,13 +11,23 @@
 
 body {
 	@apply bg-background-100 font-poppins text-white-100 text-base
-	min-h-screen mx-6
+	min-h-screen mx-6;
 }
 
-input {
-	@apply bg-transparent border border-white-300 rounded-xl text-white-100 py-4 px-5 w-full placeholder:text-white-200 focus:border-white-200;
+input, select {
+	@apply bg-transparent border border-white-300 rounded-xl text-white-100 py-4 px-5 w-full placeholder:text-white-200 focus:border-white-200 appearance-none;
 }
 
+.input-password {
+	@apply relative pr-12;
+}
+
+select {
+	background-image: url('../../assets/img/svg/dropdown.svg');
+	background-position: right .625rem center;
+	background-repeat: no-repeat;
+	padding-right: 1.875rem;
+}
 
 
 /* ------------------- */
