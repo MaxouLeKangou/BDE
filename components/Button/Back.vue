@@ -12,7 +12,7 @@ const props = defineProps<{
 const redirect = () => {
 	if (props.link) {
 		if (props.link !== 'none') {
-  			useRouter().push(props.link)
+			navigateTo(props.link)
 		}
 	} else {
 		useRouter().back()
