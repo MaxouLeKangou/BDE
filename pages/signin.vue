@@ -1,7 +1,7 @@
 <template>
 	<main class="h-screen pb-10 flex flex-col">
 		<header class="flex justify-center py-14">
-			<Logo class="h-24 w-24"/>
+			<Logo class="h-24 w-24 text-primary-100"/>
 		</header>
 
 		<div class="flex flex-grow flex-col justify-between">

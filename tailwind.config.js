@@ -49,6 +49,12 @@ export default {
                 poppins_extrabold: ["Poppins-ExtraBold", "sans-serif"],
 
             },
+            borderRadius: {
+                "card": "1.25rem",
+            },
+            backgroundImage: {
+                integration: 'url(/assets/img/INT.png)'
+            }
         },
     },
     plugins: [],
