@@ -15,4 +15,8 @@
 
 <script setup lang="ts">
 const expirationDate = '2024/2025'
+
+definePageMeta({
+	middleware: 'auth',
+});
 </script>

@@ -1,15 +1,12 @@
 import pocketBase from 'pocketbase';
 export const pocketbase = new pocketBase(useRuntimeConfig().public.DATABASE_URL);
 
-// const clear = pocketbase.authStore.clear()
-
 export const user = pocketbase.authStore
-console.log('User login : ' + user.isValid)
-// export const redirect = () => {
-// 	if (user.isValid) {
-// 		useRouter().push('/')
-// 	}
-// }
+
+export const signOut = () => {
+	pocketbase.authStore.clear()
+	navigateTo('/signin')
+}
 
 export const useSignIn = async (account: object) => {
 	try {
@@ -56,13 +53,32 @@ export const getUser = async (id: string) => {
 	return await pocketbase.collection('users').getOne(id)
 }
 
+export const getBDE = async () => {
+	return await pocketbase.collection('users').getFullList({filter: 'bde != ""'});
+}
+
+export const getBDEroles = async () => {
+	return await pocketbase.collection('bde').getFullList()
+}
+
 export async function getPicture(id: string, collection: string) {
 	const data = await pocketbase.collection(collection).getOne(id);
 	return pocketbase.files.getUrl(data, data.thumbnail);
 }
 
 export async function getEvents() {
-	return await pocketbase.collection('events').getFullList({ expand: 'people' });
+    const response = await pocketbase.collection('events').getFullList({
+        expand: 'people'
+    });
+
+    for (const event of response) {
+        if (event.expand && event.expand.people) {
+            for (const people of event.expand.people) {
+                people.thumbnail_url = pocketbase.files.getUrl(people, people.thumbnail);
+            }
+        }
+    }
+    return response;
 }
 
 export async function getEvent() {
@@ -98,14 +114,17 @@ export const getSpecialities = async () => {
 	return await pocketbase.collection('user_speciality').getFullList()
 }
 
+export const getPartner = async (id: string) => {
+	return await pocketbase.collection('partners').getOne(id)
+}
+
 export const getPartners = async () => {
 	return await pocketbase.collection('partners').getFullList({sort: 'name'})
 }
 
-
 const currentDay = new Date();
 export const dataDay = {
 	month: currentDay.toLocaleString('fr-FR', { month: 'short' }).toUpperCase().slice(0, 3),
-	number: currentDay.toLocaleDateString('fr-FR', { day: 'numeric' }),
+	number: currentDay.toLocaleDateString('fr-FR', { day: '2-digit' }),
 	name: currentDay.toLocaleString('fr-FR', { weekday: 'long' }).toUpperCase(),
 }
