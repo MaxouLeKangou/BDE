@@ -1,6 +1,6 @@
 <template>
 	<header class="flex justify-between items-center pt-6">
-		<nuxt-link to="/" class="flex items-center gap-4">
+		<nuxt-link to="/settings" class="flex items-center gap-4">
 			<ProfilThumbnail/>
 			<p class="text-lg font-poppins_semibold">Salut, <span class="font-poppins_light">{{ data.first_name }}</span></p>
 		</nuxt-link>
@@ -19,7 +19,7 @@
 		</section>
 
 		<div class="grid grid-cols-2 grid-rows-[112px_136px_136px_144px] gap-4 pb-5">
-			<CardEvent class="col-span-2"/>
+			<CardEvent/>
 
 			<nuxt-link to="/advantage/partners" class="row-span-2 bg-white-100 rounded-card p-3 flex flex-col justify-end gap-3">
 				<div class="relative w-full h-full">
@@ -28,12 +28,12 @@
 				<h3 class="text-background-100 leading-5 text-xl font-poppins_extrabold">NOS PARTENAIRES</h3>
 			</nuxt-link>
 
-			<section class="bg-background-200 rounded-card p-3 flex flex-col justify-end gap-3">
+			<nuxt-link to="/bde" class="bg-background-200 rounded-card p-3 flex flex-col justify-end gap-3">
 				<div class="relative w-full h-full">
 					<img src="../assets/img/BDE.png" alt="" class="absolute inset-0 w-full h-full object-contain">
 				</div>
 				<h3 class="leading-5 text-xl font-poppins_extrabold">TON BDE</h3>
-			</section>
+			</nuxt-link>
 
 			<nuxt-link to="/advantage/card" class="bg-white-100 rounded-card p-3 flex flex-col justify-end gap-3 h-full">
 				<div class="relative w-full h-full">
@@ -53,7 +53,6 @@
 
 <script setup lang="ts">
 const data = await getUser(user?.model?.id);
-
 
 definePageMeta({
 	middleware: 'auth',

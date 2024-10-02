@@ -29,6 +29,28 @@ select {
 	padding-right: 1.875rem;
 }
 
+/* CONTENT OF SETTING PAGE */
+.content {
+	h2 {
+		@apply text-xl font-poppins_semibold uppercase mb-2;
+	}
+
+	h3 {
+		@apply text-lg font-poppins_semibold uppercase mb-0.5;
+	}
+
+	p {
+		@apply text-white-200 mb-7;
+	}
+
+	ul {
+		@apply flex flex-col gap-0.5 text-white-200;
+
+		li {
+			@apply last:mb-7 before:content-[''] before:w-1.5 before:h-1.5 before:bg-white-200 before:rounded-full before:inline-block before:mr-2
+		}
+	}
+}
 
 /* ------------------- */
 /* PATTERNS */
