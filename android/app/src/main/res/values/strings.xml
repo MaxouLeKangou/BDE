@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">BDE MMI</string>
+    <string name="title_activity_main">BDE MMI</string>
+    <string name="package_name">fr.bdemmi.app</string>
+    <string name="custom_url_scheme">fr.bdemmi.app</string>
+</resources>
