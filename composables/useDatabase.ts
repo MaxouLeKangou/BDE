@@ -2,6 +2,81 @@ import pocketBase from 'pocketbase';
 export const pocketbase = new pocketBase(useRuntimeConfig().public.DATABASE_URL);
 
 export const user = pocketbase.authStore
+export let userData = ref()
+
+async function getUser() {
+	try {
+		const response = await pocketbase.collection('users').getOne(user?.model?.id)
+		attachThumbnail(response, 'thumbnail')
+
+		localStorage.setItem('user', JSON.stringify(response));
+		await getDataUser()
+	} catch (error) {
+		signOut()
+	}
+}
+getUser()
+
+export const getDataUser = async () => {
+	const data = localStorage.getItem('user')
+	if(data) {
+		userData.value = JSON.parse(data)
+	} else {
+		await getUser()
+	}
+}
+
+
+export const updateUser = async (account: object) => {
+	try {
+		await pocketbase.collection('users').update(user?.model?.id, account)
+		return 'update'
+	} catch (error) {
+		return error
+	}
+}
+
+
+
+export let bdeData = ref()
+
+async function getBDE() {
+	try {
+		const response = await pocketbase.collection('users').getFullList({ filter: 'bde != ""' })
+		attachThumbnail(response, 'thumbnail')
+
+		const roles = await pocketbase.collection('bde').getFullList();
+		const roleOrder = roles.map(role => role.id);
+
+		let members = [];
+
+		for (const user of response) {
+			user.role = roles.find((role) => role.id === user.bde);
+			members.push(user);
+		}
+
+		members.sort((a, b) => {
+			const roleAIndex = roleOrder.indexOf(a.bde);
+			const roleBIndex = roleOrder.indexOf(b.bde);
+			
+			return roleAIndex - roleBIndex;
+		});
+
+		localStorage.setItem('bde', JSON.stringify(response));
+		await getDataBDE()
+	} catch (error) {
+	}
+}
+getBDE()
+
+export const getDataBDE = async () => {
+	const data = localStorage.getItem('bde')
+	if(data) {
+		bdeData.value = JSON.parse(data)
+	} else {
+		await getBDE()
+	}
+}
 
 export const signOut = () => {
 	pocketbase.authStore.clear()
@@ -10,10 +85,36 @@ export const signOut = () => {
 
 export const useSignIn = async (account: object) => {
 	try {
-		await pocketbase.collection('users').authWithPassword(account.email, account.password)
+		const response = await pocketbase.collection('users').authWithPassword(account.email, account.password)
+		attachThumbnail(response.record, 'thumbnail')
+
+		localStorage.setItem('user', JSON.stringify(response.record));
+		await getUser()
 		navigateTo('/')
 	} catch (error) {
 		return error
+	}
+}
+
+function attachThumbnail(data: any, type: string) {
+	switch (type) {
+		case 'expand':
+			if (data.expand && data.expand.people) {
+				for (const people of data.expand.people) {
+					people.thumbnail_url = pocketbase.files.getUrl(people, people.thumbnail);
+				}
+			}
+			break;
+
+		case 'thumbnail':
+			if (Array.isArray(data)) {
+				for (const item of data) {
+					item.thumbnail_url = pocketbase.files.getUrl(item, item.thumbnail);
+				}
+			} else {
+				data.thumbnail_url = pocketbase.files.getUrl(data, data.thumbnail);
+			}
+			break;
 	}
 }
 
@@ -49,77 +150,67 @@ export const useSignUp = async (account: object) => {
 	}
 }
 
-export const getUser = async (id: string) => {
-	return await pocketbase.collection('users').getOne(id)
-}
+export async function getEvent() {
+    const today = new Date().toISOString();
 
-export const getBDE = async () => {
-	return await pocketbase.collection('users').getFullList({filter: 'bde != ""'});
-}
-
-export const getBDEroles = async () => {
-	return await pocketbase.collection('bde').getFullList()
-}
-
-export async function getPicture(id: string, collection: string) {
-	const data = await pocketbase.collection(collection).getOne(id);
-	return pocketbase.files.getUrl(data, data.thumbnail);
-}
-
-export async function getEvents() {
-    const response = await pocketbase.collection('events').getFullList({
-        expand: 'people'
+    const futureEvents = await pocketbase.collection('events').getList(1, 1, {
+        filter: `start_date > "${today}"`,
+        sort: 'start_date',
+        expand: 'people',
     });
 
-    for (const event of response) {
-        if (event.expand && event.expand.people) {
-            for (const people of event.expand.people) {
-                people.thumbnail_url = pocketbase.files.getUrl(people, people.thumbnail);
-            }
-        }
+	attachThumbnail(futureEvents?.items, 'thumbnail')
+
+    if (futureEvents.items.length > 0) {
+        const closestFutureEvent = futureEvents.items[0];
+        attachThumbnail(closestFutureEvent, 'expand');
+        return closestFutureEvent;
     }
-    return response;
+
+    const pastEvents = await pocketbase.collection('events').getList(1, 1, {
+        filter: `end_date < "${today}"`,
+        sort: '-start_date',
+        expand: 'people',
+    });
+
+	attachThumbnail(pastEvents?.items, 'thumbnail')
+
+    if (pastEvents.items.length > 0) {
+        const closestPastEvent = pastEvents.items[0];
+        attachThumbnail(closestPastEvent, 'expand');
+        return closestPastEvent;
+    }
+
+    return null;
 }
 
-export async function getEvent() {
-	const events = await getEvents();
-	const today = new Date();
 
-	const futureEvents = events.filter(event => new Date(event.start_date) > today);
-
-	if (futureEvents.length > 0) {
-		const closestFutureEvent = futureEvents.reduce((closest, event) => {
-		const eventDate = new Date(event.start_date);
-		const closestDate = new Date(closest.start_date);
-		return eventDate < closestDate ? event : closest;
-		});
-		return closestFutureEvent;
-	}
-
-	const pastEvents = events.filter(event => new Date(event.end_date) < today);
-
-	if (pastEvents.length > 0) {
-		const closestPastEvent = pastEvents.reduce((closest, event) => {
-		const eventDate = new Date(event.start_date);
-		const closestDate = new Date(closest.start_date);
-		return eventDate > closestDate ? event : closest;
-		});
-		return closestPastEvent;
-	}
-
-	return null;
-}
 
 export const getSpecialities = async () => {
 	return await pocketbase.collection('user_speciality').getFullList()
 }
 
-export const getPartner = async (id: string) => {
-	return await pocketbase.collection('partners').getOne(id)
-}
+export let partnersData = ref()
 
-export const getPartners = async () => {
-	return await pocketbase.collection('partners').getFullList({sort: 'name'})
+async function getPartners() {
+	try {
+		const response = await pocketbase.collection('partners').getFullList({sort: 'name'})
+		attachThumbnail(response, 'thumbnail')
+
+		localStorage.setItem('partners', JSON.stringify(response));
+		await getDataPartners()
+	} catch (error) {
+	}
+}
+getPartners()
+
+export const getDataPartners = async () => {
+	const data = localStorage.getItem('partners')
+	if(data) {
+		partnersData.value = JSON.parse(data)
+	} else {
+		await getPartners()
+	}
 }
 
 const currentDay = new Date();

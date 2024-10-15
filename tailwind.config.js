@@ -20,6 +20,10 @@ export default {
         dropShadow: {
             'button': '10px 0px 20px 0px #FFFFFF',
         },
+        screens: {
+            'small': '420px',
+        },
+
         extend: {
             colors: {
                 primary: {

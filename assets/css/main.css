@@ -29,6 +29,10 @@ select {
 	padding-right: 1.875rem;
 }
 
+.loading-pulse {
+	@apply animate-pulse bg-white-100/10;
+}
+
 /* CONTENT OF SETTING PAGE */
 .content {
 	h2 {

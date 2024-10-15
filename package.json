@@ -10,6 +10,11 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/cli": "^6.1.2",
+    "@capacitor/core": "^6.1.2",
+    "@capacitor/ios": "^6.1.2",
+    "@capacitor/status-bar": "^6.0.1",
     "nuxt": "^3.13.0",
     "pocketbase": "^0.21.5",
     "radix-vue": "^1.9.5",

@@ -16,8 +16,15 @@
 </template>
 
 <script setup lang="ts">
+const props = defineProps({
+	picture: String
+});
 const thumbnail = ref(null as File | null);
 const emit = defineEmits(['thumbnail']);
+
+if(props.picture) {
+	thumbnail.value = props.picture;
+}
 
 const handleThumbnail = (file: File) => {
 	const reader = new FileReader();
@@ -25,7 +32,6 @@ const handleThumbnail = (file: File) => {
 		thumbnail.value = reader.result;
 		emit('thumbnail', file)
 	};
-	reader.readAsDataURL(file);
-	
+	reader.readAsDataURL(file);	
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-	<header class="pt-5">
+	<header class="pt-10">
 		<ButtonBack v-if="currentStep === 1" link="/signin"/>
 		<ButtonBack v-else @click="currentStep--" link="none"/>
 	</header>
@@ -29,7 +29,8 @@
 						type="text"
 						required aria-required="true"
 						placeholder="Nom"
-						v-model="account.last_name">
+						v-model="account.last_name"
+						class="uppercase">
 				</div>
 
 			</fieldset>

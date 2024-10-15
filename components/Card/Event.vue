@@ -1,14 +1,19 @@
 <template>
     <DialogRoot>
         <DialogTrigger @click="upEvent()" class="h-28 w-full col-span-2 rounded-card bg-background-200 flex gap-3">
-            <img :src="thumbnail" alt="" class="h-full aspect-square object-cover rounded-card"/>
-            <div class="py-5 pr-4 w-full">
-                <h2 class="text-lg font-poppins_semibold line-clamp-1 text-left">
-                    {{ event?.name }}
-                </h2>
-                <div class="flex gap-1 items-center text-sm text-white-200 font-poppins_light pt-1 pb-2">
-                    <IconsCalendar class="mb-0.5" />
-                    <p>{{ date.number }} {{ date.mounth }} - {{ date.hour }}</p>
+            <div class="h-full aspect-square">
+                <img v-if="event?.thumbnail_url" :src="event?.thumbnail_url" alt="" class="h-full w-full object-cover rounded-card"/>
+                <div v-else class="loading-pulse w-full h-full rounded-card"></div>
+            </div>
+            <div class="py-4 pr-4 h-full w-full flex flex-col justify-between">
+                <div class="flex flex-col gap-1">
+                    <h2 class="text-lg font-poppins_semibold line-clamp-1 text-left" :class="{ 'loading-pulse h-5 rounded-md': !event }">
+                        {{ event?.name }}
+                    </h2>
+                    <div class="flex gap-1 items-center text-sm text-white-200 font-poppins_light" :class="{ 'loading-pulse h-3 w-1/2 rounded-md': !date }">
+                        <IconsCalendar v-if="date" class="mb-0.5" />
+                        <p v-if="date">{{ date?.number }} {{ date?.mounth }} - {{ date?.hour }}</p>
+                    </div>
                 </div>
                 <div class="flex justify-between items-center">
                     <div class="flex space-x-[-.375rem] items-center">
@@ -30,7 +35,7 @@
 
 
                 <div class="flex gap-3 mb-5">
-                    <img :src="thumbnail" alt="" class="h-24 aspect-square object-cover rounded-card"/>
+                    <img :src="event?.thumbnail_url" alt="" class="h-24 aspect-square object-cover rounded-card"/>
                     
                     <div class="flex flex-col gap-1 pt-3">
                         <DialogTitle class="m-0 text-lg font-poppins_semibold">
@@ -38,7 +43,7 @@
                         </DialogTitle>
                         <div class="flex gap-1 items-center text-sm text-white-200 font-poppins_light">
                             <IconsCalendar class="mb-0.5" />
-                            <p>{{ date.number }} {{ date.mounth }} - {{ date.hour }}</p>
+                            <p>{{ date?.number }} {{ date?.mounth }} - {{ date?.hour }}</p>
                         </div>
                         <nuxt-link :to="event?.url_location" class="flex gap-1 items-center text-sm text-white-200 font-poppins_light">
                             <IconsLocation class="mb-0.5" />
@@ -64,10 +69,10 @@
                             <img :src="people.thumbnail_url" alt="" class="h-12 w-12 rounded-full ring-2 ring-background-200"/>
                             <div>
                                 <div class="font-poppins_semibold">
-                                    <p>{{ users[index].first_name }} {{ users[index].last_name }}</p>
+                                    <p>{{ users[index].first_name }} <span class="uppercase">{{ users[index].last_name }}</span></p>
                                 </div>
                                 <div class="font-poppins_light text-white-200">
-                                    <p>BUT {{ users[index].class }} - {{ specialities.find(speciality => speciality.id === users[index].speciality).name }}</p>
+                                    <p>BUT {{ users[index].class }} - {{ specialities.find(speciality => speciality?.id === users[index]?.speciality)?.name }}</p>
                                 </div>
                             </div>
                         </div>
@@ -87,16 +92,36 @@
 <script setup lang="ts">
 import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger } from "radix-vue";
 
-const event = ref(await getEvent());
-const thumbnail = await getPicture(event?.value?.id, "events");
+const event = ref();
+const specialities = ref();
+
+const users = ref();
+
+const date = ref();
+
+onMounted(async () => {
+    event.value = await getEvent();
+    specialities.value = await getSpecialities();
+
+    users.value = event?.value?.expand?.people;
+
+    let getDate = new Date(event?.value?.start_date);
+    date.value = {
+        mounth: getDate
+            .toLocaleString("fr-FR", { month: "short" })
+            .toUpperCase()
+            .slice(0, 3),
+        number: getDate.toLocaleDateString("fr-FR", { day: "numeric" }),
+        hour: getDate.toLocaleTimeString("fr-FR", {
+            hour: "2-digit",
+            minute: "2-digit",
+        }),
+    };
+});
 
 function peopleLength() {
     return event?.value?.people?.length;
 }
-
-const specialities = ref(await getSpecialities());
-
-const users = ref(event?.value?.expand?.people);
 
 async function upEvent() {
     event.value = await getEvent();
@@ -116,17 +141,4 @@ async function updateEvent(id: string) {
     event.value = await getEvent();
     users.value = event?.value?.expand?.people;
 }
-
-const getDate = new Date(event?.value?.start_date);
-const date = {
-    mounth: getDate
-        .toLocaleString("fr-FR", { month: "short" })
-        .toUpperCase()
-        .slice(0, 3),
-    number: getDate.toLocaleDateString("fr-FR", { day: "numeric" }),
-    hour: getDate.toLocaleTimeString("fr-FR", {
-        hour: "2-digit",
-        minute: "2-digit",
-    }),
-};
 </script>
