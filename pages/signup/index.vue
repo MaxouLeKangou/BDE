@@ -1,5 +1,5 @@
 <template>
-	<header class="pt-10">
+	<header>
 		<ButtonBack v-if="currentStep === 1" link="/signin"/>
 		<ButtonBack v-else @click="currentStep--" link="none"/>
 	</header>

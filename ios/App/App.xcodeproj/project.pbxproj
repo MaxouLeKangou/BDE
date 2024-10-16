@@ -132,7 +132,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 504EC2FF1FED79650016851F /* Build configuration list for PBXProject "App" */;
+			buildConfigurationList = 504EC2FF1FED79650016851F /* Build configuration list for PBXProject "BDE MMI" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -349,7 +349,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BRG7K3PWUN;
 				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
@@ -369,7 +371,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BRG7K3PWUN;
 				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
@@ -384,7 +388,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		504EC2FF1FED79650016851F /* Build configuration list for PBXProject "App" */ = {
+		504EC2FF1FED79650016851F /* Build configuration list for PBXProject "BDE MMI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				504EC3141FED79650016851F /* Debug */,

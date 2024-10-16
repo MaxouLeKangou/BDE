@@ -1,5 +1,5 @@
 <template>
-  <div class="small:hidden">
+  <div class="small:hidden safe-area">
     <NuxtPage/>
   </div>
 </template>

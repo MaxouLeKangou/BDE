@@ -4,16 +4,6 @@ const config: CapacitorConfig = {
     appId: "fr.bdemmi.app",
     appName: "BDE MMI",
     webDir: ".output/public/",
-
-    plugins: {
-        SplashScreen: {
-            showSpinner: true,
-            launchShowDuration: 0,
-            androidScaleType: 'CENTER_CROP',
-            splashFullScreen: true,
-            splashImmersive: true
-        },
-    },
     
     ios: {
         icon: 'resources/ios/icon/AppIcon.appiconset',

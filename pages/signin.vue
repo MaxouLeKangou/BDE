@@ -1,5 +1,5 @@
 <template>
-	<main class="h-screen pb-10 flex flex-col">
+	<main class="min-h-screen flex flex-col">
 		<header class="flex justify-center py-14">
 			<Logo class="h-24 w-24 text-primary-100"/>
 		</header>
@@ -10,7 +10,7 @@
 				<p class="text-white-200">Connectez-vous en un éclair ! Entrez simplement votre email et votre mot de passe !</p>
 			</section>
 
-			<div class="h-full flex flex-grow flex-col justify-between">
+			<div class="h-full flex flex-grow flex-col">
 				<form action="/app/app.vue" method="post" @submit.prevent="signIn()">
 					<fieldset class="flex flex-col gap-3 mb-3">
 						<div>
@@ -42,11 +42,10 @@
 					<p v-if="error" class="text-red-500 mt-3">{{ error }}</p>
 					<button type="submit" class="generic-button w-full mt-10">CONNEXION</button>
 				</form>
-
-				<p class="flex justify-center"><nuxt-link to="/signup" class="underline">vous n'avez pas de compte ?</nuxt-link></p>
 			</div>
 
 		</div>
+		<p class="absolute bottom-10 left-0 right-0 flex justify-center text-center"><nuxt-link to="/signup" class="underline">vous n'avez pas de compte ?</nuxt-link></p>
 	</main>
 </template>
 

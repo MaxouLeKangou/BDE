@@ -92,6 +92,7 @@ export const useSignIn = async (account: object) => {
 		await getUser()
 		navigateTo('/')
 	} catch (error) {
+		console.log(error)
 		return error
 	}
 }

@@ -1,5 +1,5 @@
 <template>
-	<header class="flex justify-between items-center pt-12">
+	<header class="flex justify-between items-center">
 		<nuxt-link to="/settings" class="flex items-center gap-4">
 			<ProfilThumbnail :thumbnail="userData?.thumbnail_url"/>
 			<div>
