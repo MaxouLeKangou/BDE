@@ -2,7 +2,7 @@
 	<Header link="/" title="Notifications" />
 
 	<ul v-for="filter of filters">
-		
+		<li>{{ filter.title }}</li>
 	</ul>
 </template>
 
