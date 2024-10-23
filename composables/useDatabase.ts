@@ -37,32 +37,27 @@ export const updateUser = async (account: object) => {
 }
 
 
+export const resetPassword = async () => {
+	await pocketbase.collection('users').requestPasswordReset(userData.value.email)
+	return 'resetpassword'
+}
+
 
 export let bdeData = ref()
 
 async function getBDE() {
 	try {
-		const response = await pocketbase.collection('users').getFullList({ filter: 'bde != ""' })
+		const response = await pocketbase.collection('users').getFullList({ filter: 'bde != ""', expand:'bde' })
 		attachThumbnail(response, 'thumbnail')
 
-		const roles = await pocketbase.collection('bde').getFullList();
-		const roleOrder = roles.map(role => role.id);
+		const members = response.sort((a, b) => {
+            const rankA = a.expand?.bde.rank;
+            const rankB = b.expand?.bde.rank;
 
-		let members = [];
+            return rankA - rankB;
+        });
 
-		for (const user of response) {
-			user.role = roles.find((role) => role.id === user.bde);
-			members.push(user);
-		}
-
-		members.sort((a, b) => {
-			const roleAIndex = roleOrder.indexOf(a.bde);
-			const roleBIndex = roleOrder.indexOf(b.bde);
-			
-			return roleAIndex - roleBIndex;
-		});
-
-		localStorage.setItem('bde', JSON.stringify(response));
+		localStorage.setItem('bde', JSON.stringify(members));
 		await getDataBDE()
 	} catch (error) {
 	}

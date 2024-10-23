@@ -43,7 +43,7 @@
 				<div class="relative w-full h-full">
 					<img src="../assets/img/PARTNERS.png" alt="" class="absolute inset-0 w-full h-full object-contain">
 				</div>
-				<h3 class="text-background-100 leading-5 text-xl font-poppins_extrabold">NOS PARTENAIRES</h3>
+				<h3 class="text-background-100 leading-5 text-xl font-poppins_extrabold">NOS<br/>PARTENAIRES</h3>
 			</nuxt-link>
 
 			<nuxt-link to="https://photos.google.com/share/AF1QipOX9fYUwJz0gm4uQ9vbTZhd5wzSauOEralu8tBb_ZErfgnjRQ0-MuFIiTGFbAw4Pw?pli=1&key=WVlMWmZqeUVvcnFKQUxILTJDQ2g4SjdNX0dZTnhR" class="relative col-span-2 bg-integration bg-cover rounded-card">

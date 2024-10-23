@@ -18,7 +18,7 @@
 					<img :src="member.thumbnail_url" alt="" class="rounded-full w-12 h-12 object-cover"/>
 					<div>
 						<p class="text-lg font-poppins_semibold">{{ member.first_name }} <span class="uppercase">{{ member.last_name }}</span></p>
-						<span class="text-white-200 font-poppins_light">{{ member.role.name }}</span>
+						<span class="text-white-200 font-poppins_light">{{ member.expand.bde.name }}</span>
 					</div>
 				</div>
 			</div>
