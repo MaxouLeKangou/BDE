@@ -27,16 +27,16 @@
 					class="uppercase">
 			</div>
 
-			<div class="flex flex-col gap-2">
+			<!-- <div class="flex flex-col gap-2">
 				<label for="email" class="text-white-200 text-lg">Votre adresse mail</label>
 				<input
-					oninput="this.value = this.value.toLowerCase()" 
+					oninput="this.value = this.value.toLowerCase()"
 					id="email"
 					type="email"
 					required aria-required="true" 
 					placeholder="Adresse mail"
 					v-model="userData.email">
-			</div>
+			</div> -->
 
 			<div class="flex flex-col gap-2 w-full">
 				<label for="class" class="text-white-200 text-lg">Votre année de BUT</label>
@@ -44,8 +44,7 @@
 					id="class"
 					required aria-required="true" 
 					v-model="userData.class"
-					class="bg-background-100"
-					>
+					class="bg-background-100">
 					<option value="1">BUT I</option>
 					<option value="2">BUT II</option>
 					<option value="3">BUT III</option>

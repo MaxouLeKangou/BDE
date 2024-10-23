@@ -15,7 +15,8 @@
 
 			<div v-if="bdeData" v-for="member of bdeData" :key="member.id">
 				<div class="flex gap-3 items-center">
-					<img :src="member.thumbnail_url" alt="" class="rounded-full w-12 h-12 object-cover"/>
+					<img v-if="member.thumbnail_url" :src="member.thumbnail_url" alt="" class="rounded-full w-12 h-12 object-cover"/>
+					<img v-else src="../assets/img/thumbnail/default.webp" alt="" class="rounded-full w-12 h-12 object-cover"/>
 					<div>
 						<p class="text-lg font-poppins_semibold">{{ member.first_name }} <span class="uppercase">{{ member.last_name }}</span></p>
 						<span class="text-white-200 font-poppins_light">{{ member.expand.bde.name }}</span>

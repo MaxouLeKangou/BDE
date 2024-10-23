@@ -18,7 +18,11 @@
                 <div class="flex justify-between items-center">
                     <div class="flex space-x-[-.375rem] items-center">
                         <div v-for="(people, index) of event?.expand?.people">
-                            <img v-if="index < 2" :src="people.thumbnail_url" alt="" class="h-6 w-6 rounded-full ring-2 ring-background-200"/>
+                            <div v-if="index < 2">
+                                <img v-if="people.thumbnail_url" :src="people.thumbnail_url" alt="" class="h-6 w-6 rounded-full ring-2 ring-background-200"/>
+                                <img v-else src="../../assets/img/thumbnail/default.webp" alt="" class="h-6 w-6 rounded-full ring-2 ring-background-200"/>
+                            </div>
+                            
                             <div v-else class="h-6 w-6 rounded-full text-sm font-poppins_semibold flex justify-center items-center text-black ring-2 ring-background-200 bg-secondary">
                                 +{{ peopleLength() - 2 }}
                             </div>
@@ -66,7 +70,8 @@
                     </div>
                     <div class="flex flex-col gap-3">
                         <div v-for="(people, index) of event?.expand?.people" class="flex gap-3 items-center">
-                            <img :src="people.thumbnail_url" alt="" class="h-12 w-12 rounded-full ring-2 ring-background-200"/>
+                            <img v-if="people.thumbnail_url" :src="people.thumbnail_url" alt="" class="h-12 w-12 rounded-full"/>
+                            <img v-else src="../../assets/img/thumbnail/default.webp" alt="" class="h-12 w-12 rounded-full"/>
                             <div>
                                 <div class="font-poppins_semibold">
                                     <p>{{ users[index].first_name }} <span class="uppercase">{{ users[index].last_name }}</span></p>

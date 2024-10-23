@@ -3,7 +3,7 @@
 		<div v-if="data === 'update'" class="rounded-md bg-green-600/25 border border-green-600/50">
 			<p class="py-2 px-5">Vos informations ont été mise à jours !</p>
 		</div>
-		<div v-if="data === 'resetpassword'" class="rounded-md bg-green-600/25 border border-green-600/50">
+		<div v-else-if="data === 'resetpassword'" class="rounded-md bg-green-600/25 border border-green-600/50">
 			<p class="py-2 px-5">Un mail vous a été envoyé à votre adresse mail !</p>
 		</div>
 		<div v-else class="rounded-md bg-red-600/25 border border-red-600/50">
@@ -16,4 +16,5 @@
 const props = defineProps({
 	data: String
 });
+console.log(props.data)
 </script>

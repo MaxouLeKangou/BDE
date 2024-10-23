@@ -29,7 +29,7 @@ export const getDataUser = async () => {
 
 export const updateUser = async (account: object) => {
 	try {
-		await pocketbase.collection('users').update(user?.model?.id, account)
+		userData.value = await pocketbase.collection('users').update(user?.model?.id, account)
 		return 'update'
 	} catch (error) {
 		return error
