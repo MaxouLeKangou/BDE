@@ -28,7 +28,7 @@
 
                 <DialogPortal>
                     <DialogOverlay class="bg-background-100/50 data-[state=open]:animate-overlayShow fixed inset-0 z-30"/>
-                    <DialogContent class="bg-background-200 data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] h-[80vh] max-h-[600px] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-card p-5 pt-14 pb-20 focus:outline-none z-50 flex flex-col">
+                    <DialogContent class="bg-background-200 data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] h-[80vh] max-h-[600px] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-card p-5 pt-11 pb-16 focus:outline-none z-50 flex flex-col">
                         <div class="flex gap-3 mb-5">
                             <img :src="partner.thumbnail_url" alt="" class="h-24 aspect-square object-cover rounded-full"/>
             
@@ -48,8 +48,8 @@
                                 </nuxt-link>
                             </div>
                         </div>
-                        <DialogDescription class="font-poppins_light">
-                            {{ partner?.description }}
+                        <DialogDescription>
+                            <p class="font-poppins_light whitespace-pre-wrap">{{ partner?.description }}</p>
                         </DialogDescription>
                         <DialogClose class="absolute top-5 right-5" aria-label="Close">
                             <IconsClose/>
@@ -75,6 +75,6 @@ const filteredPartners = computed(() => {
 });
 
 definePageMeta({
-	middleware: ['auth', 'member'],
+	middleware: ['auth'],
 });
 </script>
