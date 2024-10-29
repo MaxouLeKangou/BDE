@@ -1,6 +1,7 @@
 <template>
 	<Header link="/" title="paramètres"/>
 	<main class="flex flex-col gap-8">
+		<CardMember/>
 		<section>
 			<h2 class="text-xl font-poppins_semibold pb-4">Paramètres du compte</h2>
 			<div class="flex flex-col gap-3 text-lg">
@@ -27,7 +28,7 @@
 			</div>
 		</section>
 
-		<section class="pt-10">
+		<section class="py-10">
 			<button @click="signOut()" class="py-4 text-red-500 border border-red-500/50 bg-red-500/20 w-full rounded-md">SE DÉCONNECTER</button>
 		</section>
 	</main>

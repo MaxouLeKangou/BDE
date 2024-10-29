@@ -1,5 +1,5 @@
 <template>
-	<header class="flex justify-between items-center pt-5">
+	<header class="heightfix flex justify-between items-center">
 		<nuxt-link to="/settings" class="flex items-center gap-4">
 			<ProfilThumbnail :thumbnail="userData?.thumbnail_url"/>
 			<div>
@@ -8,9 +8,14 @@
 			</div>
 		</nuxt-link>
 
-		<nuxt-link to="/notifications">
-			<IconsNotification/>
-		</nuxt-link>
+		<div class="flex gap-3">
+			<nuxt-link to="">
+				<IconsTicket/>
+			</nuxt-link>
+			<nuxt-link to="/notifications">
+				<IconsNotification/>
+			</nuxt-link>
+		</div>
 	</header>
 
 	<main>
@@ -32,14 +37,14 @@
 				<h3 class="leading-5 text-xl font-poppins_extrabold">TON BDE</h3>
 			</nuxt-link>
 
-			<nuxt-link to="/advantage/card" class="row-span-2 bg-white-100 rounded-card p-3 flex flex-col justify-end gap-3" :class="{ 'grayscale opacity-75': !userData?.member }">
+			<nuxt-link :to="userData?.member === true ? '/advantage/card' : '/settings/member'" class="row-span-2 bg-white-100 rounded-card p-3 flex flex-col justify-end gap-3" :class="{ 'grayscale opacity-75': !userData?.member }">
 				<div class="relative w-full h-full">
 					<img src="../assets/img/DIAMOND.png" alt="" class="absolute inset-0 w-full h-full object-contain">
 				</div>
 				<h3 class="text-background-100 leading-5 text-xl font-poppins_extrabold">TA CARTE AVANTAGE</h3>
 			</nuxt-link>
 
-			<nuxt-link to="/advantage/partners" class="bg-white-100 rounded-card p-3 flex flex-col justify-end gap-3 h-full" :class="{ 'grayscale opacity-75': !userData?.member }">
+			<nuxt-link to="/advantage/partners" class="bg-white-100 rounded-card p-3 flex flex-col justify-end gap-3 h-full">
 				<div class="relative w-full h-full">
 					<img src="../assets/img/PARTNERS.png" alt="" class="absolute inset-0 w-full h-full object-contain">
 				</div>

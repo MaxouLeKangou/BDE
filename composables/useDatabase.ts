@@ -146,6 +146,56 @@ export const useSignUp = async (account: object) => {
 	}
 }
 
+export let nextEvent = ref()
+
+export async function getNextEvent() {
+	try {
+
+		const date = getFormattedDate();
+
+		const next = await pocketbase.collection('events').getList(1, 1, { filter: `end_date > "${date}"`, sort: 'end_date', expand: 'people, people.speciality' })
+		attachThumbnail(next?.items, 'thumbnail')
+
+		if (next.items.length > 0) {
+			const closest = next.items[0]
+			attachThumbnail(closest, 'expand')
+
+			closest.convertDate = await convertDate(closest.start_date)
+
+			localStorage.setItem('nextEvent', JSON.stringify(closest));
+			await getDataNextEvent()
+			return
+		}
+
+		const last = await pocketbase.collection('events').getList(1, 1, { filter: `end_date > "${date}"`, sort: '-end_date', expand: 'people, people.speciality' })
+		attachThumbnail(last?.items, 'thumbnail')
+
+		if (last.items.length > 0) {
+			const closest = last.items[0]
+			attachThumbnail(closest, 'expand')
+
+			closest.convertDate = await convertDate(closest.start_date)
+
+			localStorage.setItem('nextEvent', JSON.stringify(closest));
+			await getDataNextEvent()
+			return
+		}
+
+		return null
+	}
+	catch {}
+}
+getNextEvent()
+
+export const getDataNextEvent = async () => {
+	const data = localStorage.getItem('nextEvent')
+	if(data) {
+		nextEvent.value = JSON.parse(data)
+	} else {
+		await getNextEvent()
+	}
+}
+
 export async function getEvent() {
     const today = new Date().toISOString();
 
@@ -214,4 +264,34 @@ export const dataDay = {
 	month: currentDay.toLocaleString('fr-FR', { month: 'short' }).toUpperCase().slice(0, 3),
 	number: currentDay.toLocaleDateString('fr-FR', { day: '2-digit' }),
 	name: currentDay.toLocaleString('fr-FR', { weekday: 'long' }).toUpperCase(),
+}
+
+
+function getFormattedDate() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+export async function convertDate(date: string) {
+	const newDate = new Date(date)
+	const convert = {
+		mounth: newDate
+			.toLocaleString("fr-FR", { month: "short", timeZone: "UTC" })
+			.toUpperCase()
+			.slice(0, 3),
+		number: newDate.toLocaleDateString("fr-FR", { day: "numeric", timeZone: "UTC" }),
+		hour: newDate.toLocaleTimeString("fr-FR", {
+			hour: "2-digit",
+			minute: "2-digit",
+			timeZone: "UTC"
+		}),
+	}
+	return convert
 }
