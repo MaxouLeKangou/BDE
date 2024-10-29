@@ -3,7 +3,9 @@ export default defineNuxtConfig({
     compatibilityDate: "2024-04-03",
     ssr: false,
 
-	css: ['~/assets/css/main.css'],
+    plugins: ["~/plugins/push-notifications.ts"],
+
+    css: ["~/assets/css/main.css"],
     postcss: {
         plugins: {
             tailwindcss: {},
@@ -19,12 +21,17 @@ export default defineNuxtConfig({
 
     app: {
         head: {
-          meta: [
-            {
-              name: 'viewport',
-              content: 'width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1'
-            }
-          ]
-        }
-      }
+            meta: [
+                {
+                    name: "viewport",
+                    content:
+                        "width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1",
+                },
+            ],
+        },
+        // pageTransition: {
+        //     name: 'page',
+        //     mode: 'out-in'
+        // },
+    },
 });
