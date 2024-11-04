@@ -1,75 +1,21 @@
-# Nuxt 3 Minimal Starter
+<h1 align="center">BDE MMI</h1>
+<p align="center">Une application spécialement conçu pour les étudiants du BDE MMI de Montbéliard.</p><br />
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## 🏹 **Comment le télécharger et l'installer ?**
+Pour télécharger cette application sur Android, il vous suffit de cliquer [ici](https://github.com/MaxouLeKangou/BDE/releases/) !<br />
+Pour iOS, utilisez ce lien qui vous redirigera vers l'[App store](https://appstore.com/) !<br />
 
-## Setup
+Cette application est **strictement réservée** aux étudiants du BUT MMI de Montbéliard.
 
-Make sure to install the dependencies:
+## 👀 **Comment utiliser correctement l'application ?**
+Une fois téléchargée, il faudra créer votre compte. Une fois le compte créé, celui-ci sera vérifié par l'équipe du BDE !<br />
+Il vous faudra donc patienter un petit peu avant de pouvoir accéder à vos avantages !<br />
 
-```bash
-# npm
-npm install
+Eh bien oui, on ne laisse pas entrer n'importe qui 🫣
 
-# pnpm
-pnpm install
+## 🎓 **Vous avez besoin d'aide ?**
 
-# yarn
-yarn install
+- [Mon Discord](https://discordapp.com/users/maxoulekangou)
+- [Documentation](https://github.com/MaxouLeKangou/BDE/blob/main/documentation.md)
 
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+_Je remercie toutes les personnes qui téléchargerons et aiderons à améliorer cette application !_
